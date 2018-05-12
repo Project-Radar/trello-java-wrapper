@@ -26,12 +26,15 @@ import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_MEMBERS_INVITED;
 import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_MEMBER_CARDS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_MYPREFS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_ORGANIZATION;
+import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_PLUGINS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.GET_CARD_ACTIONS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_CARD_ATTACHMENT;
 import static com.julienvey.trello.impl.TrelloUrl.GET_CARD_ATTACHMENTS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_CARD_BOARD;
 import static com.julienvey.trello.impl.TrelloUrl.GET_CARD_CHECKLIST;
+import static com.julienvey.trello.impl.TrelloUrl.GET_CARD_CUSTOM_FIELD_ITEMS;
+import static com.julienvey.trello.impl.TrelloUrl.GET_CARD_PLUGINDATA;
 import static com.julienvey.trello.impl.TrelloUrl.GET_CHECK_LIST;
 import static com.julienvey.trello.impl.TrelloUrl.GET_LIST;
 import static com.julienvey.trello.impl.TrelloUrl.GET_LIST_CARDS;
@@ -58,10 +61,13 @@ import com.julienvey.trello.domain.Card;
 import com.julienvey.trello.domain.CardWithActions;
 import com.julienvey.trello.domain.CheckItem;
 import com.julienvey.trello.domain.CheckList;
+import com.julienvey.trello.domain.CustomFieldItem;
 import com.julienvey.trello.domain.Entity;
 import com.julienvey.trello.domain.Member;
 import com.julienvey.trello.domain.MyPrefs;
 import com.julienvey.trello.domain.Organization;
+import com.julienvey.trello.domain.Plugin;
+import com.julienvey.trello.domain.PluginData;
 import com.julienvey.trello.domain.TList;
 import com.julienvey.trello.impl.domaininternal.Comment;
 import com.julienvey.trello.impl.domaininternal.Label;
@@ -215,6 +221,18 @@ public class TrelloImpl implements Trello {
         organization.setInternalTrello(this);
         return organization;
     }
+    
+
+
+	@Override
+	public List<Plugin> getBoardPlugins(String boardId, Argument... args) {
+		List<Plugin> plugins = Arrays.asList(get(createUrl(GET_BOARD_PLUGINS).params(args).asString(), Plugin[].class, boardId));
+        for (Plugin plugin : plugins) {
+        	plugin.setInternalTrello(this);
+        }
+        return plugins;
+	}
+
 
     /* Action */
 
@@ -324,7 +342,28 @@ public class TrelloImpl implements Trello {
         }
         return checkLists;
     }
+    
 
+	@Override
+	public List<CustomFieldItem> getCardCustomFieldItems(String cardId, Argument... args) {
+		List<CustomFieldItem> customFieldItems = Arrays.asList(get(createUrl(GET_CARD_CUSTOM_FIELD_ITEMS).params(args).asString(), CustomFieldItem[].class, cardId));
+        for (CustomFieldItem customFieldItem : customFieldItems) {
+        	customFieldItem.setInternalTrello(this);
+        }
+        return customFieldItems;
+	}
+
+
+
+	@Override
+	public List<PluginData> getPluginData(String cardId, Argument... args) {
+		List<PluginData> pluginData = Arrays.asList(get(createUrl(GET_CARD_PLUGINDATA).params(args).asString(), PluginData[].class, cardId));
+        for (PluginData pluginDataItem : pluginData) {
+        	pluginDataItem.setInternalTrello(this);
+        }
+        return pluginData;
+	}
+	
     /* Lists */
 
     @Override

@@ -43,6 +43,14 @@ public class Card extends TrelloEntity {
     public List<Action> getActions(Argument... filters) {
         return trelloService.getCardActions(id, filters);
     }
+    
+    public List<CustomFieldItem> getCustomFieldItems(Argument... filters) {
+    	return trelloService.getCardCustomFieldItems(id, filters);
+    }
+    
+    public List<PluginData> getPluginData(Argument... filters) {
+    	return trelloService.getPluginData(id,  filters);
+    }
 
     /* Accessors */
     public String getId() {

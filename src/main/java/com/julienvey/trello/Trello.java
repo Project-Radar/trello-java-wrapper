@@ -11,11 +11,14 @@ import com.julienvey.trello.domain.Card;
 import com.julienvey.trello.domain.CardWithActions;
 import com.julienvey.trello.domain.CheckItem;
 import com.julienvey.trello.domain.CheckList;
+import com.julienvey.trello.domain.CustomFieldItem;
 import com.julienvey.trello.domain.Entity;
 import com.julienvey.trello.domain.Label;
 import com.julienvey.trello.domain.Member;
 import com.julienvey.trello.domain.MyPrefs;
 import com.julienvey.trello.domain.Organization;
+import com.julienvey.trello.domain.Plugin;
+import com.julienvey.trello.domain.PluginData;
 import com.julienvey.trello.domain.TList;
 
 public interface Trello {
@@ -38,6 +41,8 @@ public interface Trello {
     List<Member> getBoardMembers(String boardId, Argument... args);
 
     List<Card> getBoardMemberCards(String boardId, String memberId, Argument... args);
+    
+    List<Plugin> getBoardPlugins(String boardId, Argument... args);
 
     //FIXME Remove this method
     @Deprecated
@@ -79,6 +84,10 @@ public interface Trello {
     Attachment getCardAttachment(String cardId, String attachmentId, Argument... args);
 
     Board getCardBoard(String cardId, Argument... args);
+    
+    List<CustomFieldItem> getCardCustomFieldItems(String cardId, Argument... args);
+    
+    List<PluginData> getPluginData(String cardId, Argument... args);
 
     /* Lists */
 

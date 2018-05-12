@@ -71,6 +71,10 @@ public class Board extends TrelloEntity {
     public Organization fetchOrganization(Argument... args) {
         return trelloService.getBoardOrganization(id, args);
     }
+    
+    public List<Plugin> fetchPlugins(Argument... args) {
+    	return trelloService.getBoardPlugins(id, args);
+    }
 
     /* Accessors */
     public String getId() {
